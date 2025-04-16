@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>你的名字 | 動畫特效 × 教學 × 研究</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-color: #f4f4f4;
+      --primary-color: #111;
+      --accent-color: #c9975c;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Noto Sans TC', sans-serif;
+    }
+    body {
+      background-color: var(--bg-color);
+      color: var(--primary-color);
+      line-height: 1.6;
+    }
+    header {
+      background: #fff;
+      padding: 2rem;
+      text-align: center;
+      border-bottom: 1px solid #ddd;
+    }
+    header h1 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      animation: fadeIn 1.2s ease-in-out;
+    }
+    nav {
+      margin-top: 1rem;
+    }
+    nav a {
+      margin: 0 1rem;
+      text-decoration: none;
+      color: var(--primary-color);
+      font-weight: 600;
+      position: relative;
+      transition: color 0.3s;
+    }
+    nav a::after {
+      content: "";
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0%;
+      height: 2px;
+      background-color: var(--accent-color);
+      transition: width 0.3s;
+    }
+    nav a:hover {
+      color: var(--accent-color);
+    }
+    nav a:hover::after {
+      width: 100%;
+    }
+    main {
+      padding: 2rem;
+      max-width: 960px;
+      margin: auto;
+    }
+    section {
+      margin-bottom: 4rem;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: slideUp 0.8s ease-out forwards;
+    }
+    section:nth-of-type(2) {
+      animation-delay: 0.2s;
+    }
+    section:nth-of-type(3) {
+      animation-delay: 0.4s;
+    }
+    section:nth-of-type(4) {
+      animation-delay: 0.6s;
+    }
+    section h2 {
+      font-size: 1.6rem;
+      margin-bottom: 1rem;
+      border-left: 5px solid var(--accent-color);
+      padding-left: 0.5rem;
+    }
+    .grid {
+      display: grid;
+      gap: 1.5rem;
+    }
+    .project {
+      background: #fff;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .project:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+    .project h3 {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+    footer {
+      text-align: center;
+      padding: 2rem;
+      background: #fff;
+      border-top: 1px solid #ddd;
+      font-size: 0.9rem;
+    }
+    @media (min-width: 768px) {
+      .grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @keyframes slideUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>你的名字</h1>
+    <nav>
+      <a href="#portfolio">作品集</a>
+      <a href="#teaching">教學</a>
+      <a href="#research">研究</a>
+      <a href="#cv">履歷</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="portfolio">
+      <h2>動畫作品集</h2>
+      <div class="grid">
+        <div class="project">
+          <h3>專案名稱</h3>
+          <p>粒子模擬與特效製作，使用 Houdini 完成。</p>
+        </div>
+        <div class="project">
+          <h3>專案名稱</h3>
+          <p>角色動畫合成，結合 Blender 與 After Effects。</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="teaching">
+      <h2>教學展示</h2>
+      <p>曾開設動畫特效入門、合成流程工作坊，強調實務導向與跨平台整合。</p>
+    </section>
+
+    <section id="research">
+      <h2>研究方向</h2>
+      <p>博士研究主題：動畫創作中的 AI 工具應用與創作流程優化。</p>
+    </section>
+
+    <section id="cv">
+      <h2>履歷摘要</h2>
+      <ul>
+        <li>現職：動畫特效師（2021–現在）</li>
+        <li>博士班（設計系）就讀中</li>
+        <li>技能：Houdini、AE、Blender、Python、AI 輔助創作</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    © 2025 你的名字｜聯絡方式：you@email.com
+  </footer>
+</body>
+</html>
