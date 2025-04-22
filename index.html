@@ -103,6 +103,19 @@
     .project:hover {
       transform: translateY(-5px);
     }
+    .project-image {
+      width: 100%;
+      height: 200px;
+      margin-bottom: 1rem;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .project-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
     .video-fullscreen {
       position: relative;
       width: 100vw;
@@ -161,52 +174,96 @@
   <header>
     <h1>ZHU WEI LIN | 朱為麟</h1>
     <nav>
-      <a href="#portfolio">作品集</a>
-      <a href="#teaching">教學</a>
-      <a href="#research">研究</a>
       <a href="#cv">履歷</a>
+	  <a href="#portfolio">專案</a>
+      <a href="#teaching">教學</a>
+      <a href="#research">學術</a>
+	  <a href="#work">實務</a>
+      <a href="#awards">獲獎</a>
     </nav>
   </header>
 
   <main>
-  <div class="image-fullscreen">
-    <div class="featured-image">
-      <img src="C:/Users/User/Desktop/web/images/featuredimage.jpg" alt="Banner" />
+    <div class="image-fullscreen">
+      <div class="featured-image">
+        <img src="C:/Users/User/Desktop/web/images/featuredimage.jpg" alt="Banner" />
+      </div>
     </div>
-</div>
-
+<section id="cv">
+      <h2>履歷摘要</h2>
+      <ul>
+        <li>現職：時光門影像 CG Generalist（2022-迄今）</li>
+        <li>學歷：國立雲林科技大學視覺傳達設計系 碩士班 (2018-2021)</li>
+        <li>領域：3D動畫、視覺特效、AI 輔助影像創作</li>
+      </ul>
+    </section>
     <section id="portfolio">
-      <h2>動畫作品集</h2>
+      <h2>AI專案作品</h2>
       <div class="grid">
         <div class="project">
-          <h3>專案名稱</h3>
-		  <div class="featured-image">
-      <img src="C:/Users/User/Desktop/web/images/featuredimage.jpg" alt="Banner" />
-    </div>
-          <p>粒子模擬與特效製作，使用 Houdini 完成。</p>
+          <h3>Blender外掛開發</h3>
+          <div class="project-image">
+            <img src="C:/Users/User/Desktop/web/images/align_tool.png" alt="Banner" />
+          </div>
+          <p>讓使用者能在編輯模式下有效率的對齊點、線及面。使用Google Gemini共同完成python撰寫。</p>
           <a href="#" class="btn">查看更多</a>
         </div>
         <div class="project">
-          <h3>專案名稱</h3>
-		  <div class="featured-image">
-      <img src="C:/Users/User/Desktop/web/images/featuredimage.jpg" alt="Banner" />
-    </div>
-          <p>角色動畫合成，結合 Blender 與 After Effects。</p>
+          <h3>AI輔助製作視覺特效</h3>
+          <div class="project-image">
+            <img src="C:/Users/User/Desktop/web/images/VFX.png" alt="Banner" />
+          </div>
+          <p>使用Midjourney及Runway輔助生成影像素材，並在虛擬攝影機中完成場景搭建</p>
           <a href="#" class="btn">查看更多</a>
         </div>
+		
       </div>
     </section>
 
     <section id="teaching">
-      <h2>教學展示</h2>
-      <p>曾開設動畫特效入門、合成流程工作坊，強調實務導向與跨平台整合。</p>
+      <h2>教學及講座經歷</h2>
+      <p>2024國立彰化師範大學 | 資訊管理系 Blender 3D動畫外聘講師</p>
+	  <p>2023國立臺南大學 | 動畫媒體研究所 動畫創作演講 </p>
+	  <P>2023國立雲林科技大學 | 教育推廣中心 工作營講師 </p>
+	  <p>2022台南應用科技大學 | 運動休閒與健康管理系 動態剪輯工作坊講師 </p>
+	  
     </section>
 
     <section id="research">
-      <h2>研究方向</h2>
-      <p>博士研究主題：動畫創作中的 AI 工具應用與創作流程優化。</p>
+      <h2>學術發表</h2>
+	  <p>2021 《門扇之外》－探討重複敘事之動畫創作研究 指導教授邱顯源 </p>
+      <p>2021 邱顯源、朱為麟（2021）。探討動畫短片中的重複敘事手法。視聽傳播期刊No.51,pp.77-93</p>
+	  <p>2019 Hsien-Yuan Chiu,Wei-Lin Chu(2019), Analysis of the Narrative Types of“Metaphor” in Animated Short Films, Art and Design Review,Vol.7, No.4. </p>
     </section>
-
+	
+	<section id="work">
+      <h2>專業實務經歷</h2>
+	  <p>2025 紀錄片 《人人二十》紀錄片拍攝、片頭設計 </p>
+      <p>2025 教育部113學年度藝師藝有計畫訪談拍攝、後期製作 </p>
+	  <p>2024 台灣設計展在台南 草非火策展團隊 踅se̍h西市展區 動畫製作 </p>
+	  <p>2024 動畫短片《潮生之蟹》 3D texturing, lighting, compositing </p>
+	  <p>2024 鏡電視紀錄片《那些年，他們撐起的職棒》3D modeling, texturing, animation </p>
+	  <p>2024 華碩電腦Asus ROG Chatbot Game動態製作 </p>
+	  <p>2024 5G文化科技應用展《 AR王船祭》 3D modeling,texturing </p>
+	  <p>2023 影集《省省吧！我家富貴發》3D texturing, lighting, compositing </p>
+	  <p>2023 雲林科技大學 111年科技藝術跨領域融合與創新研究計畫 攝影、剪輯、後製 </p>
+	  <p>2023 臺南美術館「跨入風景──劃地起造的自然」展覽 CF製作、展覽訪談紀錄、剪輯  </p>
+	  <p>2022 《心的改變》微電影 製片，3D modeling, texturing, lighting, compositing </p>
+	  <p>2022 人人有功練《練削話》MV剪輯助理 </p>
+	  	 	  
+    </section>
+     <section id="awards">
+		<h2>獲獎紀錄</h2>
+		<p>2024 《潮生之蟹》作品獲愛拍雲林 - 雲林縣113年公用頻道影片徵件-冠軍 (時光門創意影像文化有限公司出品) </p>
+		<p>2022 《Behind the Door》作品獲Festival RNAB-決選 </p>
+		<p>2021 《Behind the Door》作品獲International Science Film Festival of India-提名 </p>
+		<p>2021 《Behind the Door》作品獲Athens Digital Arts Festival-入圍 </p>
+		<p>2020 《空空的山Void Mountain》作品獲放視大賞2D動畫組-入圍 </p>
+		<p>2020 《空空的山Void Mountain》作品獲A+創意季 設計創新領域-入圍 </p>
+		<p>2020 《空空的山Void Mountain》作品獲FLICKFAIR-入圍 </p>
+		<p>2018 《喃南Nan nan》作品獲2018台南畫世代動畫影展-首獎 </p>
+		<p>2018 《喃南Nan nan》「絕色之城」107年臺南市公用頻道影片徵件-亞軍 </p>
+			</section>
     <section id="video">
       <h2>動畫展示影片</h2>
       <div class="video-fullscreen">
@@ -214,19 +271,11 @@
       </div>
     </section>
 
-    <section id="cv">
-      <h2>履歷摘要</h2>
-      <ul>
-        <li>現職：時光門影像 CG Generalist（Since2022）</li>
-        <li>博士班（設計系）就讀中</li>
-        <li>技能：Houdini、AE、Blender、Python、AI 輔助創作</li>
-        
-      </ul>
-    </section>
+    
   </main>
 
   <footer>
-    © 2025 AI石頭生成器｜聯絡方式：you@email.com
+    © 2025 ZHU WEI LIN｜wellin.job@gmail.com
   </footer>
 
   <script>
