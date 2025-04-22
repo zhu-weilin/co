@@ -134,15 +134,20 @@
       border: 0;
     }
     .featured-image {
-      width: 100%;
-      margin-bottom: 4rem;
-      border-radius: 12px;
-      overflow: hidden;
-    }
-    .featured-image img {
-      width: 100%;
-      display: block;
-    }
+	width: 100vw;
+	height: 300px;
+	margin-left: calc(-50vw + 50%);
+	margin-top: 0;
+	margin-bottom: 4rem;
+	overflow: hidden;
+	}
+
+	.featured-image img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+	}
     footer {
       text-align: center;
       padding: 4rem 2rem;
@@ -182,13 +187,11 @@
       <a href="#awards">獲獎</a>
     </nav>
   </header>
-
+	<!-- Banner 拉出 main 區塊 -->
+	<div class="featured-image">
+	<img src="images/featuredimage.jpg" alt="Banner" />
+	</div>
   <main>
-    <div class="image-fullscreen">
-      <div class="featured-image">
-        <img src="C:/Users/User/Desktop/web/images/featuredimage.jpg" alt="Banner" />
-      </div>
-    </div>
 <section id="cv">
       <h2>履歷摘要</h2>
       <ul>
@@ -198,10 +201,10 @@
       </ul>
     </section>
     <section id="portfolio">
-      <h2>AI專案作品</h2>
+      <h2>專案作品</h2>
       <div class="grid">
         <div class="project">
-          <h3>Blender外掛開發</h3>
+          <h3>BlenderAI外掛開發</h3>
           <div class="project-image">
             <img src="images/align_tool.png" alt="align_tool" />
           </div>
