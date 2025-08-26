@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Development 研發</title> <link rel="icon" href="favicon.webp" type="image/webp">
+  <meta name="description" content="朱為麟的3D視覺與特效作品集，專精於VFX、CGI、3D動畫與後製，提供電影、廣告及短片視覺設計服務。">
+  <meta name="keywords" content="朱為麟, ZHU WEI LIN, 3D, VFX, 視覺特效, 動畫, 作品集, 藝術家, CGI, 後製, 台灣, 台北, 廣告, 電影">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    :root {
+      --bg-color: #121212;
+      --text-color: #ffffff;
+      --accent-color: #e4bb97;
+      --card-bg: #1e1e1e;
+      --header-bg: #1c1c1c;
+      --footer-bg: #1c1c1c;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Noto Sans TC', sans-serif;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      background: var(--bg-color);
+      color: var(--text-color);
+    }
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: var(--header-bg);
+      padding: 0.8rem 1rem; /* Adjusted padding */
+      display: flex;
+      justify-content: space-between; /* Keep space between title and button */
+      align-items: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+      flex-wrap: wrap; /* Allow wrapping if needed */
+    }
+    header h1 {
+      font-size: 1.3rem; /* Consistent title size */
+      font-weight: 700;
+      margin-right: 1rem; /* Space between title and button */
+    }
+    header h1 a { /* 新增樣式來確保連結文字顏色與其他文字一致且沒有底線 */
+      color: var(--text-color);
+      text-decoration: none;
+    }
+    header h1 a:visited { /* 新增樣式來避免點擊後變色 */
+      color: var(--text-color);
+    }
+    main {
+      padding-top: 80px; /* Adjust based on fixed header height */
+      max-width: 1100px; /* Keep max-width for centered content */
+      margin: 0 auto;
+      padding-left: 2rem;
+      padding-right: 2rem;
+      min-height: calc(100vh - 80px - 6rem); /* Ensure main content pushes footer down */
+      /* 100vh - header height - footer padding top/bottom */
+    }
+    /* Keep general section styles */
+    section {
+      margin-bottom: 5rem;
+      opacity: 0; /* Keep initial hidden state */
+      transform: translateY(30px); /* Keep initial transform */
+      transition: opacity 0.8s ease, transform 0.8s ease; /* Keep transition */
+    }
+    section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    h2 {
+      font-size: 1.8rem;
+      margin-bottom: 1.5rem;
+	  text-align: center; /* Center the text */
+    }
+    /* Original grid for other sections */
+    .grid {
+      display: grid;
+      gap: 2rem;
+    }
+
+    /* Style for the portfolio section to make it full width */
+    /* Note: Portfolio specific styles are removed as this is a general template */
+    /* section#portfolio {
+        margin-bottom: 5rem;
+        margin-left: calc(-50vw + 50%);
+        margin-right: calc(-50vw + 50%);
+        width: 100vw;
+        padding: 0;
+    } */
+
+    /* Style for portfolio grid */
+    /* Note: Portfolio specific styles are removed as this is a general template */
+    /* .portfolio-grid {
+        display: grid;
+        gap: 0.5rem;
+        padding: 0;
+    } */
+
+    /* Media query for larger screens to adjust grid columns */
+    @media (min-width: 768px) {
+      /* Keep grid layout for desktop for general grid */
+      .grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+       /* Adjust portfolio grid for desktop - 3 columns */
+       /* Note: Portfolio specific styles are removed as this is a general template */
+       /* .portfolio-grid {
+           grid-template-columns: repeat(3, 1fr);
+           padding: 0;
+           gap: 0.5rem;
+       } */
+    }
+
+    /* Style for the project items */
+    /* Note: Project specific styles are removed as this is a general template */
+    /* .project {
+      background: var(--card-bg);
+      border-radius: 0;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+      padding: 0;
+      display: block;
+      cursor: pointer;
+    } */
+
+    /* Style for the anchor tag wrapping the project */
+    /* Note: Project specific styles are removed as this is a general template */
+    /* .project-link {
+        text-decoration: none;
+        color: inherit;
+        display: block;
+    } */
+
+
+    /* .project-image {
+      width: 100%;
+      height: 300px;
+      display: block;
+      overflow: hidden;
+      position: relative;
+    } */
+
+    /* .project-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.3s ease;
+    } */
+
+    /* Scale image on project hover */
+    /* .project-link:hover .project-image img {
+        transform: scale(1.1);
+    } */
+
+    /* Style for the project overlay */
+    /* .project-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        z-index: 1;
+    } */
+
+    /* Show overlay on project hover */
+    /* .project-link:hover .project-overlay {
+        opacity: 1;
+    } */
+
+
+    /* Style for the project title */
+    /* .project h3 {
+        color: var(--text-color);
+        padding: 1rem;
+        margin: 0;
+        text-align: center;
+    } */
+
+
+    .video-fullscreen {
+      position: relative;
+      width: 100vw;
+      height: 56.25vw; /* 16:9 Aspect Ratio */
+      max-height: 100vh;
+      overflow: hidden;
+      margin-left: calc(-50vw + 50%); /* Center full-width element */
+      margin-bottom: 4rem; /* Add space below video */
+    }
+    .video-fullscreen iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+    .featured-image {
+        width: 100vw;
+        height: 300px; /* Or desired height */
+        margin-left: calc(-50vw + 50%);
+        margin-top: 0; /* Removed top margin from original */
+        margin-bottom: 4rem;
+        overflow: hidden;
+    }
+
+    .featured-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+    footer {
+      text-align: center;
+      padding: 2rem; /* Reduced padding slightly */
+      background: var(--footer-bg);
+      font-size: 0.9rem;
+      color: #aaa;
+      display: flex; /* Use flexbox for layout */
+      flex-direction: column; /* Stack content vertically */
+      align-items: center; /* Center content horizontally */
+      gap: 1rem; /* Add space between items */
+    }
+
+    .social-links {
+        display: flex; /* Use flexbox for social links */
+        gap: 1.5rem; /* Space between social icons */
+        margin-bottom: 1rem; /* Space below social links */
+    }
+
+    .social-links a {
+        color: var(--text-color); /* Icon color */
+        font-size: 1.5rem; /* Icon size */
+        transition: color 0.3s ease;
+    }
+
+    .social-links a:hover {
+        color: var(--accent-color); /* Hover color */
+    }
+
+    /* Style for the contact section */
+    /* Note: Contact specific styles are removed as this is a general template */
+    /* #contact {
+        text-align: center;
+        max-width: 600px;
+        margin: 0 auto 5rem auto;
+        padding: 0 2rem;
+    } */
+
+    /* #contact h2 {
+        text-align: center;
+        border-left: none;
+        padding-left: 0;
+        margin-bottom: 2rem;
+    } */
+
+    /* #contact form {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    } */
+
+    /* #contact label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 700;
+        text-align: left;
+    } */
+
+    /* #contact input[type="text"],
+    #contact input[type="email"],
+    #contact textarea {
+        width: 100%;
+        padding: 1rem;
+        border: 1px solid var(--card-bg);
+        background: var(--card-bg);
+        color: var(--text-color);
+        border-radius: 8px;
+        font-size: 1rem;
+    } */
+
+    /* #contact textarea {
+        min-height: 150px;
+        resize: vertical;
+    } */
+
+    /* #contact button[type="submit"] {
+        display: inline-block;
+        background: var(--accent-color);
+        color: #000;
+        padding: 0.75rem 2rem;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1.1rem;
+        font-weight: 700;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        align-self: center;
+    } */
+
+    /* #contact button[type="submit"]:hover {
+        background-color: #c29b7d;
+        transform: scale(1.05);
+    } */
+
+
+    ul {
+      list-style: disc outside; /* Use disc bullets outside the text flow */
+      padding-left: 1.5rem; /* Indent the list */
+    }
+
+    li {
+      /* Removed text-indent and padding-left from li to use standard list styling */
+      margin-bottom: 0.5rem; /* Add space between list items */
+    }
+
+    .btn {
+      display: inline-block;
+      background: var(--accent-color);
+      color: #000;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+    }
+
+    /* --- Hamburger Menu CSS (Always Active) Start --- */
+    .hamburger-menu {
+      display: block; /* ALWAYS show button */
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 10px;
+      z-index: 1001; /* Ensure it's above the nav */
+      margin-left: auto; /* Push it to the right */
+      order: 3; /* Ensure it comes after title */
+    }
+
+    .hamburger-menu span {
+      display: block;
+      width: 25px;
+      height: 3px;
+      background-color: var(--text-color);
+      margin: 5px 0;
+      transition: all 0.3s ease-in-out;
+    }
+
+    /* Navigation dropdown styles (Always apply) */
+    nav#main-nav {
+      display: none; /* ALWAYS hide by default */
+      order: 4; /* Ensure nav comes after button in flex order */
+      width: 100%; /* Take full width */
+      position: absolute; /* Position relative to header */
+      top: 100%; /* Start below the header */
+      left: 0;
+      right: 0;
+      background-color: var(--header-bg);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      padding: 1rem 0;
+      flex-direction: column; /* Stack links vertically */
+      align-items: center; /* Center links */
+    }
+
+    nav#main-nav.is-active {
+      display: flex; /* Show nav when active */
+    }
+
+    nav#main-nav a {
+      margin: 0.8rem 1.5rem; /* Reset margins for vertical layout */
+      width: 100%; /* Make links take full width */
+      text-align: center; /* Center text */
+      padding: 0.5rem 0; /* Add some vertical padding */
+      color: var(--text-color); /* Ensure text color is set */
+      text-decoration: none; /* Remove underline */
+      font-weight: 500; /* Match original font weight */
+    }
+
+    /* Remove hover effect from original desktop nav */
+    nav#main-nav a::after {
+       display: none;
+    }
+    /* Optional: Add a hover effect for the dropdown links */
+    nav#main-nav a:hover {
+        background-color: rgba(255, 255, 255, 0.1); /* Subtle hover background */
+    }
+
+
+    /* Hamburger icon animation to 'X' (Always apply) */
+    .hamburger-menu.is-active span:nth-child(1) {
+      transform: translateY(8px) rotate(45deg);
+    }
+    .hamburger-menu.is-active span:nth-child(2) {
+      opacity: 0;
+    }
+    .hamburger-menu.is-active span:nth-child(3) {
+      transform: translateY(-8px) rotate(-45deg);
+    }
+	.development-section {
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.dev-card {
+  background-color: var(--card-bg);
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  transition: transform 0.4s ease, opacity 0.4s ease;
+  opacity: 0;
+  transform: translateY(40px);
+}
+
+.dev-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.icon-circle {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background-color: #2a2a2a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.icon-circle img {
+  width: 40px;
+  height: 40px;
+}
+
+.dev-card h3 {
+  color: var(--accent-color);
+  margin-bottom: 0.8rem;
+  font-size: 1.2rem;
+}
+
+.dev-card ul {
+  list-style: disc;
+  padding-left: 1.2rem;
+  margin-top: 1rem;
+}
+
+@media (max-width: 767px) {
+  .development-section {
+    grid-template-columns: 1fr;
+  }
+}
+
+.fade-in.delay {
+  transition-delay: 0.2s;
+}
+
+    /* Removed the @media wrapper */
+
+    /* --- Hamburger Menu JavaScript (Always Active) End --- */
+  </style>
+</head>
+<body>
+  <header>
+    <h1><a href="index.html">ZHU WEI LIN | 朱為麟</a></h1>
+
+    <button class="hamburger-menu" aria-label="開啟選單" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <nav id="main-nav">
+      <a href="cv.html">About 關於</a>
+      <a href="index.html">Project 專案</a>
+	  <a href="development.html">Development 研發</a>
+    </nav>
+  </header>
+
+  <main>
+<h2>Development 研發</h2>
+
+  <div class="grid development-section">
+    <!-- AI Plugin Card -->
+    <div class="dev-card fade-in">
+      <div class="icon-circle">
+        <img src="images/icon/aiicon.webp" alt="AI Plugin" />
+      </div>
+      <h3>AI 輔助外掛開發</h3>
+      <p>
+        我們投入 AI 技術與動畫製作流程整合，開發具創意與效率的外掛工具，目前應用於：
+      </p>
+      <ul>
+        <li>After Effects 製作流程</li>
+        <li>Blender 動畫製作</li>
+        <li>腳本開發及概念圖輔助應用</li>
+      </ul>
+    </div>
+
+    <!-- Podcast Card -->
+    <div class="dev-card fade-in delay">
+      <div class="icon-circle">
+        <img src="images/icon/podcasticon.webp" alt="Podcast Incubation" />
+      </div>
+      <h3>原創 Podcast 節目</h3>
+      <p>
+        團隊企劃並製作文化類原創 Podcast，透過訪談與觀察挖掘故事：
+      </p>
+      <ul>
+        <li>影視及文化創意產業觀察</li>
+        <li>職涯經驗談</li>
+        <li>社會趨勢觀察</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+  </main>
+
+  <footer>
+    <div class="social-links">
+        <a href="https://www.instagram.com/zhu.weilin/" target="_blank" aria-label="Instagram">
+            <i class="fab fa-instagram"></i>
+        </a>
+        <a href="https://www.behance.net/weilinzhu" target="_blank" aria-label="Behance">
+            <i class="fab fa-behance"></i>
+        </a>
+        <a href="https://www.artstation.com/zhuweilin" target="_blank" aria-label="Artstation">
+            <i class="fab fa-artstation"></i>
+        </a>
+    </div>
+    <div>
+        © 2025 ZHU WEI LIN｜wellin.job@gmail.com
+    </div>
+  </footer>
+
+  <script>
+    // Original IntersectionObserver script (Stays the same)
+    const sections = document.querySelectorAll('section');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, {
+      threshold: 0.1 /* Trigger when 10% of the section is visible */
+    });
+
+    sections.forEach(section => {
+      observer.observe(section);
+    });
+
+    // --- Hamburger Menu JavaScript (Stays the same) ---
+    const hamburgerButton = document.querySelector('.hamburger-menu');
+    const mainNav = document.querySelector('#main-nav');
+
+    if (hamburgerButton && mainNav) { // Check if elements exist
+      hamburgerButton.addEventListener('click', () => {
+        // Toggle the 'is-active' class on the navigation menu
+        mainNav.classList.toggle('is-active');
+
+        // Toggle the 'is-active' class on the hamburger button itself (for styling)
+        hamburgerButton.classList.toggle('is-active');
+
+        // Update the aria-expanded attribute for accessibility
+        const isActive = mainNav.classList.contains('is-active');
+        hamburgerButton.setAttribute('aria-expanded', isActive ? 'true' : 'false');
+      });
+
+      // Optional: Close the menu when a link is clicked
+      mainNav.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          // Check if the menu is currently active
+          if (mainNav.classList.contains('is-active')) {
+             mainNav.classList.remove('is-active');
+             hamburgerButton.classList.remove('is-active');
+             hamburgerButton.setAttribute('aria-expanded', 'false');
+          }
+        });
+      });
+    }
+    // --- Hamburger Menu JavaScript End ---
+	const devCards = document.querySelectorAll('.dev-card');
+devCards.forEach(card => {
+  observer.observe(card);
+});
+  </script>
+  
+</body>
+</html>

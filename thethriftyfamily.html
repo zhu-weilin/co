@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>省省吧!我家富貴發</title> <link rel="icon" href="favicon.webp" type="image/webp">
+  <meta name="description" content="朱為麟的3D視覺與特效作品集，專精於VFX、CGI、3D動畫與後製，提供電影、廣告及短片視覺設計服務。">
+  <meta name="keywords" content="朱為麟, ZHU WEI LIN, 3D, VFX, 視覺特效, 動畫, 作品集, 藝術家, CGI, 後製, 台灣, 台北, 廣告, 電影">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    :root {
+      --bg-color: #121212;
+      --text-color: #ffffff;
+      --accent-color: #e4bb97;
+      --card-bg: #1e1e1e;
+      --header-bg: #1c1c1c;
+      --footer-bg: #1c1c1c;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Noto Sans TC', sans-serif;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      background: var(--bg-color);
+      color: var(--text-color);
+    }
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: var(--header-bg);
+      padding: 0.8rem 1rem; /* Adjusted padding */
+      display: flex;
+      justify-content: space-between; /* Keep space between title and button */
+      align-items: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+      flex-wrap: wrap; /* Allow wrapping if needed */
+    }
+    header h1 {
+      font-size: 1.3rem; /* Consistent title size */
+      font-weight: 700;
+      margin-right: 1rem; /* Space between title and button */
+    }
+    header h1 a { /* 新增樣式來確保連結文字顏色與其他文字一致且沒有底線 */
+      color: var(--text-color);
+      text-decoration: none;
+    }
+    header h1 a:visited { /* 新增樣式來避免點擊後變色 */
+      color: var(--text-color);
+    }
+    main {
+      padding-top: 80px; /* Adjust based on fixed header height */
+      max-width: 1100px; /* Keep max-width for centered content */
+      margin: 0 auto;
+      padding-left: 2rem;
+      padding-right: 2rem;
+      min-height: calc(100vh - 80px - 6rem); /* Ensure main content pushes footer down */
+      /* 100vh - header height - footer padding top/bottom */
+    }
+    /* Keep general section styles */
+    section {
+      margin-bottom: 5rem;
+      opacity: 0; /* Keep initial hidden state */
+      transform: translateY(30px); /* Keep initial transform */
+      transition: opacity 0.8s ease, transform 0.8s ease; /* Keep transition */
+    }
+    section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+	.center-text {
+		text-align: center;
+	}
+	h2 {
+      font-size: 1.8rem;
+      margin-bottom: 1.5rem;
+      text-align: center; /* Center the text */
+    }
+    h3 {
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
+      text-align: center; /* Center the text */
+    }
+    /* Original grid for other sections */
+    .grid {
+      display: grid;
+      gap: 2rem;
+	}
+    /* Style for the featured image section */
+    .featured-image {
+        position: relative; /* Needed for positioning pseudo-element and content */
+        width: 100vw; /* Full viewport width */
+        height: 60vh; /* Adjust height as needed */
+        margin-left: calc(-50vw + 50%); /* Center the full-width element */
+        margin-right: calc(-50vw + 50%);
+        margin-top: 0;
+        margin-bottom: 4rem;
+        overflow: hidden; /* Hide overflowing content */
+        display: flex; /* Use flexbox to center content */
+        justify-content: center; /* Center horizontally */
+        align-items: center; /* Center vertically */
+        color: var(--text-color); /* Ensure text is visible */
+        text-align: center;
+        /* Ensure no transform or perspective on parent elements interfere */
+        transform-style: preserve-3d;
+        /* Removed background and filter from the container */
+        background: none;
+        filter: none;
+        /* Define a CSS variable for background position Y */
+        --background-position-y: 30%; /* Initial vertical position */
+    }
+
+    /* Pseudo-element for the blurred background image */
+    .featured-image::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: url('images/VFX.webp'); /* Placeholder image */
+        background-size: cover; /* Cover the entire area */
+        /* Use the CSS variable for background position Y */
+        background-position: center var(--background-position-y);
+        background-repeat: no-repeat; /* Prevent image repetition */
+        /* Removed background-attachment: fixed; as we use JS */
+        filter: blur(5px); /* Apply blur filter here */
+        z-index: -1; /* Position behind the content */
+    }
+
+
+    .featured-image h2 {
+        color: var(--text-color); /* Ensure title color is white */
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.5); /* Add text shadow for readability */
+        margin: 0; /* Remove default margin */
+        padding: 0 1rem; /* Add some padding */
+        position: relative; /* Ensure title is above the pseudo-element */
+        z-index: 1;
+    }
+
+	.video-fullscreen {
+		position: relative;
+		width: 100vw;
+		height: 100vh;
+		margin-left: calc(-50vw + 50%);
+		margin-right: calc(-50vw + 50%);
+		overflow: hidden;
+		z-index: 0;
+	}
+
+	.video-fullscreen iframe {
+		width: 100%;
+		height: 100%;
+		border: none;
+	}
+	.full-width-gallery {
+		display: flex;
+		flex-wrap: wrap;
+		margin-left: calc(-50vw + 50%);
+		margin-right: calc(-50vw + 50%);
+		width: 100vw;
+	}
+
+	.full-width-gallery a {
+		flex: 1 0 33.3%; /* 兩欄佈局，可調為 100% 變成單欄 */
+		max-width: 33.3%;
+		display: block;
+	}
+
+	.full-width-gallery img {
+		width: 100%;
+		height: auto;
+		display: block;
+		border-radius: 0; /* 無圓角 */
+		transition: transform 0.3s ease;
+		cursor: non;
+	}
+	/* Lightbox Overlay */
+	.lightbox-overlay {
+		position: fixed;
+		top: 0; left: 0;
+		width: 100%; height: 100%;
+		background: rgba(0, 0, 0, 0.9);
+		display: none;
+		justify-content: center;
+		align-items: center;
+		z-index: 2000;
+	}
+
+	.lightbox-overlay.active {
+		display: flex;
+	}
+
+	.lightbox-content {
+		position: relative;
+		max-width: 90%;
+		max-height: 90%;
+	}
+
+	.lightbox-content img {
+		width: 100%;
+		height: auto;
+		display: block;
+		opacity: 0;
+		transition: opacity 0.3s ease-in-out; /* Changed transition duration to 0.3s to match JS */
+	}
+
+	.lightbox-content img.visible {
+		opacity: 1;
+	}
+
+	.lightbox-nav {
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
+		font-size: 2rem;
+		color: white;
+		background: rgba(0,0,0,0.5);
+		border: none;
+		padding: 0.5rem 1rem;
+		cursor: pointer;
+	}
+
+	.lightbox-prev {
+	  left: 1rem;
+	}
+
+	.lightbox-next {
+	  right: 1rem;
+	}
+
+	.lightbox-close {
+	  position: absolute;
+	  top: -2rem;
+	  right: 0rem;
+	  font-size: 1.5rem;
+	  background: none;
+	  color: white;
+	  border: none;
+	  cursor: pointer;
+	}
+
+	@media (max-width: 600px) {
+	  .lightbox-prev, .lightbox-next {
+		font-size: 1.5rem;
+		padding: 0.3rem 0.6rem;
+	  }
+	  .lightbox-prev { left: 0.5rem; }
+	  .lightbox-next { right: 0.5rem; }
+
+	}
+
+    footer {
+      text-align: center;
+      padding: 2rem; /* Reduced padding slightly */
+      background: var(--footer-bg);
+      font-size: 0.9rem;
+      color: #aaa;
+      display: flex; /* Use flexbox for layout */
+      flex-direction: column; /* Stack content vertically */
+      align-items: center; /* Center content horizontally */
+      gap: 1rem; /* Add space between items */
+    }
+
+    .social-links {
+        display: flex; /* Use flexbox for social links */
+        gap: 1.5rem; /* Space between social icons */
+        margin-bottom: 1rem; /* Space below social links */
+    }
+
+    .social-links a {
+        color: var(--text-color); /* Icon color */
+        font-size: 1.5rem; /* Icon size */
+        transition: color 0.3s ease;
+    }
+
+    .social-links a:hover {
+        color: var(--accent-color); /* Hover color */
+    }
+
+    ul {
+      list-style: disc outside; /* Use disc bullets outside the text flow */
+      padding-left: 1.5rem; /* Indent the list */
+    }
+
+    li {
+      /* Removed text-indent and padding-left from li to use standard list styling */
+      margin-bottom: 0.5rem; /* Add space between list items */
+    }
+
+    .btn {
+      display: inline-block;
+      background: var(--accent-color);
+      color: #000;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+    }
+
+    /* --- Hamburger Menu CSS (Always Active) Start --- */
+    .hamburger-menu {
+      display: block; /* ALWAYS show button */
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 10px;
+      z-index: 1001; /* Ensure it's above the nav */
+      margin-left: auto; /* Push it to the right */
+      order: 3; /* Ensure it comes after title */
+    }
+
+    .hamburger-menu span {
+      display: block;
+      width: 25px;
+      height: 3px;
+      background-color: var(--text-color);
+      margin: 5px 0;
+      transition: all 0.3s ease-in-out;
+    }
+
+    /* Navigation dropdown styles (Always apply) */
+    nav#main-nav {
+      display: none; /* ALWAYS hide by default */
+      order: 4; /* Ensure nav comes after button in flex order */
+      width: 100%; /* Take full width */
+      position: absolute; /* Position relative to header */
+      top: 100%; /* Start below the header */
+      left: 0;
+      right: 0;
+      background-color: var(--header-bg);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      padding: 1rem 0;
+      flex-direction: column; /* Stack links vertically */
+      align-items: center; /* Center links */
+    }
+
+    nav#main-nav.is-active {
+      display: flex; /* Show nav when active */
+    }
+
+    nav#main-nav a {
+      margin: 0.8rem 1.5rem; /* Reset margins for vertical layout */
+      width: 100%; /* Make links take full width */
+      text-align: center; /* Center text */
+      padding: 0.5rem 0; /* Add some vertical padding */
+      color: var(--text-color); /* Ensure text color is set */
+      text-decoration: none; /* Remove underline */
+      font-weight: 500; /* Match original font weight */
+    }
+
+    /* Remove hover effect from original desktop nav */
+    nav#main-nav a::after {
+       display: none;
+    }
+    /* Optional: Add a hover effect for the dropdown links */
+    nav#main-nav a:hover {
+        background-color: rgba(255, 255, 255, 0.1); /* Subtle hover background */
+    }
+
+
+    /* Hamburger icon animation to 'X' (Always apply) */
+    .hamburger-menu.is-active span:nth-child(1) {
+      transform: translateY(8px) rotate(45deg);
+    }
+    .hamburger-menu.is-active span:nth-child(2) {
+      opacity: 0;
+    }
+    .hamburger-menu.is-active span:nth-child(3) {
+      transform: translateY(-8px) rotate(-45deg);
+    }
+
+    /* Removed the @media wrapper */
+
+    /* --- Hamburger Menu JavaScript (Always Active) End --- */
+  </style>
+</head>
+<body>
+  <header>
+    <h1><a href="index.html">ZHU WEI LIN | 朱為麟</a></h1>
+
+    <button class="hamburger-menu" aria-label="開啟選單" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <nav id="main-nav">
+      <a href="cv.html">About 關於</a>
+      <a href="index.html">Project 專案</a>
+	  <a href="development.html">Development 研發</a>
+    </nav>
+  </header>
+
+  <main>
+		<section class="featured-image">
+			<h2>省省吧!我家富貴發</h2>
+		</section>
+		<section class="video-fullscreen">
+			<iframe src="https://www.youtube.com/embed/G8kPxQ2CjQg?autoplay=1&mute=1&loop=1&playlist=G8kPxQ2CjQg&controls=0&rel=0&showinfo=0"
+				allow="autoplay; fullscreen"
+				allowfullscreen>
+			</iframe>
+		</section>
+		<section id="new-page-content">
+			<p>《省省吧我家富貴發》2024年上映於三立都會台，故事描述為了達成買房夢的一家人，過著有創意的省錢生活。影集利用劇中劇的形式讓一家人愛看的電視節目—《異星冒險》呼應現實買房的議題。本專案主要負責異星場景製作以及現實飛碟的合成，飛碟在現實中是建商廣告的巨型氣球，也在異星世界中扮演著穿針引線的重要角色，因此在CG製作上除了設計飛碟的型態外，同時需要讓現實的氣球能夠讓觀眾辨認為同一個飛碟。在場景設定上異星是火星地景，需要於畫面中創造沙塵與大氣感(atmosphere)，特別是光線的視覺效果添加了柔光(cinebloom)，提升畫面質感。</p>
+		</section>
+		<section id="new-page-content">
+			<p>This family drama tells the story of a household determined to achieve their dream of homeownership by embracing a creatively frugal lifestyle. The series cleverly integrates a show-within-a-show concept through the fictional sci-fi program "Alien Adventures", which parallels the family’s real-world housing struggles. </p>
+			<p>My primary responsibilities included the design and production of the alien planet environment and the compositing of a recurring UFO element across both narrative layers. In the real world, the UFO appears as a giant advertising balloon for a property developer; in the alien setting, it serves as a critical narrative link. The challenge was to design a CG saucer that remained visually consistent and recognizable across both contexts. </p>
+			<p>The alien world was inspired by Martian landscapes, requiring the creation of a dusty atmosphere and a strong environmental presence. To enhance the cinematic quality, I incorporated a cinebloom lighting effect that added depth and realism to the alien scenes. </p>
+		</section>
+		  <section>
+			<div class="full-width-gallery">
+			<a href="images/project/thethriftyfamily/01.webp">
+				<img src="images/project/thethriftyfamily/01.webp" alt="Martian terrain layout">
+			</a>
+			<a href="images/project/thethriftyfamily/02.webp">
+				<img src="images/project/thethriftyfamily/02.webp" alt="Dust and atmosphere compositing">
+			</a>
+			<a href="images/project/thethriftyfamily/03.webp">
+				<img src="images/project/thethriftyfamily/03.webp" alt="UFO design iteration">
+			</a>
+			<a href="images/project/thethriftyfamily/04.webp">
+				<img src="images/project/thethriftyfamily/04.webp" alt="Real-world balloon match move">
+			</a>
+			<a href="images/project/thethriftyfamily/05.webp">
+				<img src="images/project/thethriftyfamily/05.webp" alt="Real-world balloon match move">
+			</a>
+			<a href="images/project/thethriftyfamily/06.webp">
+				<img src="images/project/thethriftyfamily/06.webp" alt="Real-world balloon match move">
+			</a>
+			<a href="images/project/thethriftyfamily/07.webp">
+				<img src="images/project/thethriftyfamily/07.webp" alt="Real-world balloon match move">
+			</a>
+			<a href="images/project/thethriftyfamily/08.webp">
+				<img src="images/project/thethriftyfamily/08.webp" alt="Real-world balloon match move">
+			</a>
+			<a href="images/project/thethriftyfamily/09.webp">
+				<img src="images/project/thethriftyfamily/09.webp" alt="Real-world balloon match move">
+			</a>
+			<a href="images/project/thethriftyfamily/10.webp">
+				<img src="images/project/thethriftyfamily/10.webp" alt="Real-world balloon match move">
+			</a>
+			<a href="images/project/thethriftyfamily/11.webp">
+				<img src="images/project/thethriftyfamily/11.webp" alt="Real-world balloon match move">
+			</a>
+			<a href="images/project/thethriftyfamily/12.webp">
+				<img src="images/project/thethriftyfamily/12.webp" alt="Real-world balloon match move">
+			</a>
+			<a href="images/project/thethriftyfamily/13.webp">
+				<img src="images/project/thethriftyfamily/13.webp" alt="Real-world balloon match move">
+			</a>
+			<a href="images/project/thethriftyfamily/14.webp">
+				<img src="images/project/thethriftyfamily/14.webp" alt="Real-world balloon match move">
+			</a>
+			<a href="images/project/thethriftyfamily/15.webp">
+				<img src="images/project/thethriftyfamily/15.webp" alt="Real-world balloon match move">
+			</a>
+			</div>
+		</section>
+		<section id="new-page-content">
+			<h3>Credit 工作人員名單</h3>
+				<div class="credit">
+                    <p class="center-text">出品公司 Production Company｜瀚草文創事業股份有限公司  世界柔軟數位影像文化有限公司</p>
+                    <p class="center-text">特效執行 VFX Production Company｜湧現動態視覺製作有限公司  時光門創意影像文化有限公司</p>
+					<p class="center-text">特效導演 VFX Director｜馬毓廷</p>
+					<p class="center-text">特效總監 VFX Supervisor｜黃俊碩</p>
+					<p class="center-text">3D動畫師 3D Animator｜朱為麟</p>
+					<p class="center-text">特效合成 Compositor｜黃俊碩、朱為麟</p>
+					<p class="center-text">特效助理 Junior Compositor｜蘇柔伊</p>
+				</div>
+		</section>
+  </main>
+
+ <footer>
+    <div class="social-links">
+        <a href="https://www.instagram.com/zhu.weilin/" target="_blank" aria-label="Instagram">
+            <i class="fab fa-instagram"></i>
+        </a>
+        <a href="https://www.behance.net/weilinzhu" target="_blank" aria-label="Behance">
+            <i class="fab fa-behance"></i>
+        </a>
+        <a href="https://www.artstation.com/zhuweilin" target="_blank" aria-label="Artstation">
+            <i class="fab fa-artstation"></i>
+        </a>
+    </div>
+    <div>
+        © 2025 ZHU WEI LIN｜wellin.job@gmail.com
+    </div>
+  </footer>
+
+  <div class="lightbox-overlay" id="lightbox">
+    <div class="lightbox-content">
+      <button class="lightbox-close" id="lightbox-close">×</button>
+      <button class="lightbox-nav lightbox-prev" id="lightbox-prev">❮</button>
+      <img id="lightbox-img" src="" alt="Preview">
+      <button class="lightbox-nav lightbox-next" id="lightbox-next">❯</button>
+    </div>
+  </div>
+
+
+  <script>
+    // Original IntersectionObserver script
+    const sections = document.querySelectorAll('section');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, {
+      threshold: 0.1 /* Trigger when 10% of the section is visible */
+    });
+
+    sections.forEach(section => {
+      observer.observe(section);
+    });
+
+    // --- Hamburger Menu JavaScript ---
+    const hamburgerButton = document.querySelector('.hamburger-menu');
+    const mainNav = document.querySelector('#main-nav');
+
+    if (hamburgerButton && mainNav) { // Check if elements exist
+      hamburgerButton.addEventListener('click', () => {
+        // Toggle the 'is-active' class on the navigation menu
+        mainNav.classList.toggle('is-active');
+
+        // Toggle the 'is-active' class on the hamburger button itself (for styling)
+        hamburgerButton.classList.toggle('is-active');
+
+        // Update the aria-expanded attribute for accessibility
+        const isActive = mainNav.classList.contains('is-active');
+        hamburgerButton.setAttribute('aria-expanded', isActive ? 'true' : 'false');
+      });
+
+      // Optional: Close the menu when a link is clicked
+      mainNav.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          // Check if the menu is currently active
+          if (mainNav.classList.contains('is-active')) {
+             mainNav.classList.remove('is-active');
+             hamburgerButton.classList.remove('is-active');
+             hamburgerButton.setAttribute('aria-expanded', 'false');
+          }
+        });
+      });
+    }
+    // --- Hamburger Menu JavaScript End ---
+
+    // JavaScript for Parallax Effect
+    const featuredImage = document.querySelector('.featured-image');
+
+    if (featuredImage) { // Check if the element exists
+        window.addEventListener('scroll', () => {
+            // Calculate the new background position based on scroll position
+            // Adjust the multiplier (0.3) to control the parallax speed
+            const scrollPosition = window.scrollY;
+            const parallaxSpeed = 0.3; // Smaller number means slower movement
+            // Adjust the offset value (e.g., -100) to shift the starting position upwards
+            // A negative offset moves the background position upwards
+            const scrollOffset = -100; // Example offset in pixels
+            const newBackgroundPositionY = (scrollPosition * parallaxSpeed) + scrollOffset;
+
+            // Update the CSS variable on the featured-image element
+            featuredImage.style.setProperty('--background-position-y', newBackgroundPositionY + 'px');
+        });
+
+        // Set initial background position on load
+        const initialScrollPosition = window.scrollY;
+        const initialParallaxSpeed = 0.3;
+        const initialScrollOffset = -100;
+        const initialBackgroundPositionY = (initialScrollPosition * initialParallaxSpeed) + initialScrollOffset;
+        featuredImage.style.setProperty('--background-position-y', initialBackgroundPositionY + 'px');
+    }
+
+    // Lightbox Script (Corrected for fade-in/fade-out and structure)
+    const galleryLinks = document.querySelectorAll('.full-width-gallery a');
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const lightboxClose = document.getElementById('lightbox-close');
+    const lightboxPrev = document.getElementById('lightbox-prev');
+    const lightboxNext = document.getElementById('lightbox-next');
+
+    let currentIndex = 0;
+    const imageUrls = Array.from(galleryLinks).map(link => link.href);
+
+    // Function to update the image source and handle fade-in
+    function updateImageSource(index) {
+      // Ensure index is within bounds
+      currentIndex = (index + imageUrls.length) % imageUrls.length;
+
+      // Set the new image source
+      lightboxImg.src = imageUrls[currentIndex];
+
+      // When the new image is loaded, fade it in
+      lightboxImg.onload = () => {
+        lightboxImg.classList.add('visible');
+        // Remove onload handler to avoid issues if src is set again quickly
+        lightboxImg.onload = null;
+      };
+
+       // Handle potential errors during loading
+       lightboxImg.onerror = () => {
+         console.error('Error loading image:', imageUrls[currentIndex]);
+         // Optionally display a broken image icon or a message
+         // lightboxImg.src = 'path/to/error-image.webp'; // Uncomment to show a default error image
+         lightboxImg.classList.add('visible'); // Show the error icon if one is set, or just the broken image icon
+         lightboxImg.onerror = null; // Remove onerror handler
+       };
+    }
+
+    // Function to open the lightbox and show the image
+    function openLightbox(index) {
+      currentIndex = index;
+      lightbox.classList.add('active'); // Activate the lightbox overlay first
+      // Short delay before setting the image source to allow overlay to appear and for potential fade-out transition of previous content
+      setTimeout(() => {
+          updateImageSource(currentIndex); // Set initial image, which will then fade in
+      }, 10); // A very short delay (e.g., 10ms) is usually sufficient
+    }
+
+    // Function to close the lightbox
+    function closeLightbox() {
+      // Start fade out
+      lightboxImg.classList.remove('visible');
+      // Wait for fade out then close the lightbox overlay and clear source
+      setTimeout(() => {
+          lightbox.classList.remove('active');
+          // Clearing the image source helps release memory and resets the img element
+          lightboxImg.src = '';
+           // Ensure onload and onerror handlers are reset when closing
+          lightboxImg.onload = null;
+          lightboxImg.onerror = null;
+      }, 300); // Wait time matches the CSS transition-duration (0.3s)
+    }
+
+    // Function to navigate to the next image with fade
+    function showNextImage() {
+        // Start fade out
+        lightboxImg.classList.remove('visible');
+        // Wait for fade out then update source and fade in
+        setTimeout(() => {
+            currentIndex = (currentIndex + 1) % imageUrls.length;
+            updateImageSource(currentIndex);
+        }, 300); // Wait time matches the CSS transition-duration (0.3s)
+    }
+
+    // Function to navigate to the previous image with fade
+    function showPrevImage() {
+        // Start fade out
+        lightboxImg.classList.remove('visible');
+        // Wait for fade out then update source and fade in
+        setTimeout(() => {
+            currentIndex = (currentIndex - 1 + imageUrls.length) % imageUrls.length;
+            updateImageSource(currentIndex);
+        }, 300); // Wait time matches the CSS transition-duration (0.3s)
+    }
+
+
+    // Event listeners for gallery links
+    galleryLinks.forEach((link, index) => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        openLightbox(index);
+      });
+    });
+
+    // Event listeners for lightbox controls
+    lightboxClose.addEventListener('click', closeLightbox);
+
+    lightboxPrev.addEventListener('click', showPrevImage);
+
+    lightboxNext.addEventListener('click', showNextImage);
+
+    // Close lightbox when clicking the overlay
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) {
+        closeLightbox();
+      }
+    });
+
+    // Optional: Close lightbox with Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+        closeLightbox();
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ZHU WEI LIN | 朱為麟</title>
+  <meta name="description" content="朱為麟的3D視覺與特效作品集，專精於VFX、CGI、3D動畫與後製，提供電影、廣告及短片視覺設計服務。">
+  <meta name="keywords" content="朱為麟, ZHU WEI LIN, 3D, VFX, 視覺特效, 動畫, 作品集, 藝術家, CGI, 後製, 台灣, 台北, 廣告, 電影">
+  <link rel="icon" href="favicon.webp" type="image/webp">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    :root {
+      --bg-color: #121212;
+      --text-color: #ffffff;
+      --accent-color: #e4bb97;
+      --card-bg: #1e1e1e;
+      --header-bg: #1c1c1c;
+      --footer-bg: #1c1c1c;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Noto Sans TC', sans-serif;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      background: var(--bg-color);
+      color: var(--text-color);
+    }
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: var(--header-bg);
+      padding: 0.8rem 1rem; /* Adjusted padding */
+      display: flex;
+      justify-content: space-between; /* Keep space between title and button */
+      align-items: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+      flex-wrap: wrap; /* Allow wrapping if needed */
+    }
+    header h1 {
+      font-size: 1.3rem; /* Consistent title size */
+      font-weight: 700;
+      margin-right: 1rem; /* Space between title and button */
+    }
+    header h1 a { /* 新增樣式來確保連結文字顏色與其他文字一致且沒有底線 */
+      color: var(--text-color);
+      text-decoration: none;
+    }
+    header h1 a:visited { /* 新增樣式來避免點擊後變色 */
+      color: var(--text-color);
+    }
+
+
+    main {
+      padding-top: 80px; /* Adjust based on fixed header height */
+      max-width: 1100px; /* Keep max-width for centered content */
+      margin: 0 auto;
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+    /* Keep general section styles */
+    section {
+      margin-bottom: 5rem;
+      opacity: 0; /* Keep initial hidden state */
+      transform: translateY(30px); /* Keep initial transform */
+      transition: opacity 0.8s ease, transform 0.8s ease; /* Keep transition */
+    }
+    section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    h2 {
+      font-size: 1.8rem;
+      margin-bottom: 1.5rem;
+	  text-align: center; /* Center the text */
+    }
+    /* Original grid for other sections */
+    .grid {
+      display: grid;
+      gap: 2rem;
+    }
+
+    /* Style for the portfolio section to make it full width */
+    section#portfolio {
+        margin-bottom: 5rem; /* Keep space below the section */
+        /* Counteract the main padding to make it full width */
+        margin-left: calc(-50vw + 50%); /* Center the section */
+        margin-right: calc(-50vw + 50%); /* Center the section */
+        width: 100vw; /* Make it full viewport width */
+        padding: 0; /* Remove padding from the section itself */
+    }
+
+    /* Style for portfolio grid */
+    .portfolio-grid {
+        display: grid;
+        /* Set gap between grid items */
+        gap: 0.5rem; /* Reduced gap */
+        /* Remove padding from the grid container */
+        padding: 0;
+    }
+
+    /* Media query for larger screens to adjust grid columns */
+    @media (min-width: 768px) {
+      /* Keep grid layout for desktop for general grid */
+      .grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+       /* Adjust portfolio grid for desktop - 3 columns */
+       .portfolio-grid {
+           grid-template-columns: repeat(3, 1fr); /* Three columns */
+           /* Ensure padding is removed on larger screens too */
+           padding: 0;
+           /* Reduced gap for desktop as well */
+           gap: 0.5rem;
+       }
+    }
+
+    /* Style for the project items */
+    .project {
+      background: var(--card-bg);
+      /* Remove border-radius */
+      border-radius: 0;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+      /* Removed transform transition from here */
+      /* transition: transform 0.3s ease; */
+      position: relative; /* Needed for absolute positioning of overlay */
+      overflow: hidden; /* Ensure overlay and image stay within bounds */
+      width: 100%; /* Make projects take full width within the portfolio grid item */
+      padding: 0; /* Remove padding from project card itself */
+      display: block; /* Ensure project is a block element for proper sizing */
+    }
+
+    /* Removed hover transform for the entire project block */
+    /* .project:hover {
+      transform: translateY(-5px);
+    } */
+
+    .project-image {
+      width: 100%;
+      height: 300px; /* Adjust height as needed */
+      display: block; /* Ensure image container is block */
+      overflow: hidden; /* Hide overflowing image during scale */
+      position: relative; /* Needed for image scaling */
+    }
+
+    .project-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.3s ease; /* Add transition for smooth scaling */
+    }
+
+    /* Scale image on project hover */
+    .project:hover .project-image img {
+        transform: scale(1.1); /* Scale image up by 10% */
+    }
+
+    /* Style for the project overlay */
+    .project-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7); /* Semi-transparent black background */
+        display: flex; /* Use flexbox to center content */
+        justify-content: center; /* Center horizontally */
+        align-items: center; /* Center vertically */
+        opacity: 0; /* Hide by default */
+        transition: opacity 0.3s ease; /* Smooth transition */
+        z-index: 1; /* Ensure overlay is above image */
+        pointer-events: none; /* Allow clicks to pass through to the project link if it were present */
+    }
+
+    /* Show overlay on project hover */
+    .project:hover .project-overlay {
+        opacity: 1; /* Show on hover */
+    }
+
+
+    /* Style for the project title */
+    .project h3 {
+        color: var(--text-color);
+        padding: 1rem; /* Add padding inside the title overlay */
+        margin: 0; /* Remove default margin */
+        text-align: center;
+        /* Removed absolute positioning from h3, now handled by overlay flexbox */
+        /* position: absolute; */
+        /* bottom: 0; */
+        /* left: 0; */
+        /* right: 0; */
+        /* Removed background from h3, now on overlay */
+        /* background: rgba(0, 0, 0, 0.7); */
+        /* Removed opacity and transition from h3, now on overlay */
+        /* opacity: 0; */
+        /* transition: opacity 0.3s ease; */
+        /* Removed z-index from h3 */
+        /* z-index: 1; */
+    }
+
+    /* Removed hover opacity for h3, now on overlay */
+    /* .project:hover h3 {
+        opacity: 1;
+    } */
+
+
+    .video-fullscreen {
+      position: relative;
+      width: 100vw;
+      height: 56.25vw; /* 16:9 Aspect Ratio */
+      max-height: 100vh;
+      overflow: hidden;
+      margin-left: calc(-50vw + 50%); /* Center full-width element */
+      margin-bottom: 4rem; /* Add space below video */
+    }
+    .video-fullscreen iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+    .featured-image {
+        width: 100vw;
+        height: 300px; /* Or desired height */
+        margin-left: calc(-50vw + 50%);
+        margin-top: 0; /* Removed top margin from original */
+        margin-bottom: 4rem;
+        overflow: hidden;
+    }
+
+    .featured-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+    footer {
+      text-align: center;
+      padding: 2rem; /* Reduced padding slightly */
+      background: var(--footer-bg);
+      font-size: 0.9rem;
+      color: #aaa;
+      display: flex; /* Use flexbox for layout */
+      flex-direction: column; /* Stack content vertically */
+      align-items: center; /* Center content horizontally */
+      gap: 1rem; /* Add space between items */
+    }
+	
+	 .social-links {
+        display: flex; /* Use flexbox for social links */
+        gap: 1.5rem; /* Space between social icons */
+        margin-bottom: 1rem; /* Space below social links */
+    }
+
+    .social-links a {
+        color: var(--text-color); /* Icon color */
+        font-size: 1.5rem; /* Icon size */
+        transition: color 0.3s ease;
+    }
+
+    .social-links a:hover {
+        color: var(--accent-color); /* Hover color */
+    }
+    ul {
+      list-style: disc outside; /* Use disc bullets outside the text flow */
+      padding-left: 1.5rem; /* Indent the list */
+    }
+
+    li {
+      /* Removed text-indent and padding-left from li to use standard list styling */
+      margin-bottom: 0.5rem; /* Add space between list items */
+    }
+
+    .btn {
+      display: inline-block;
+      background: var(--accent-color);
+      color: #000;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+    }
+
+    /* --- Hamburger Menu CSS (Always Active) Start --- */
+    .hamburger-menu {
+      display: block; /* ALWAYS show button */
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 10px;
+      z-index: 1001; /* Ensure it's above the nav */
+      margin-left: auto; /* Push it to the right */
+      order: 3; /* Ensure it comes after title */
+    }
+
+    .hamburger-menu span {
+      display: block;
+      width: 25px;
+      height: 3px;
+      background-color: var(--text-color);
+      margin: 5px 0;
+      transition: all 0.3s ease-in-out;
+    }
+
+    /* Navigation dropdown styles (Always apply) */
+    nav#main-nav {
+      display: none; /* ALWAYS hide by default */
+      order: 4; /* Ensure nav comes after button in flex order */
+      width: 100%; /* Take full width */
+      position: absolute; /* Position relative to header */
+      top: 100%; /* Start below the header */
+      left: 0;
+      right: 0;
+      background-color: var(--header-bg);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      padding: 1rem 0;
+      flex-direction: column; /* Stack links vertically */
+      align-items: center; /* Center links */
+    }
+
+    nav#main-nav.is-active {
+      display: flex; /* Show nav when active */
+    }
+
+    nav#main-nav a {
+      margin: 0.8rem 1.5rem; /* Reset margins for vertical layout */
+      width: 100%; /* Make links take full width */
+      text-align: center; /* Center text */
+      padding: 0.5rem 0; /* Add some vertical padding */
+      color: var(--text-color); /* Ensure text color is set */
+      text-decoration: none; /* Remove underline */
+      font-weight: 500; /* Match original font weight */
+    }
+
+    /* Remove hover effect from original desktop nav */
+    nav#main-nav a::after {
+       display: none;
+    }
+    /* Optional: Add a hover effect for the dropdown links */
+    nav#main-nav a:hover {
+        background-color: rgba(255, 255, 255, 0.1); /* Subtle hover background */
+    }
+
+
+    /* Hamburger icon animation to 'X' (Always apply) */
+    .hamburger-menu.is-active span:nth-child(1) {
+      transform: translateY(8px) rotate(45deg);
+    }
+    .hamburger-menu.is-active span:nth-child(2) {
+      opacity: 0;
+    }
+    .hamburger-menu.is-active span:nth-child(3) {
+      transform: translateY(-8px) rotate(-45deg);
+    }
+
+    /* Removed the @media wrapper */
+
+    /* --- Hamburger Menu JavaScript (Always Active) End --- */
+  </style>
+</head>
+<body>
+  <header>
+    <h1><a href="index.html">ZHU WEI LIN | 朱為麟</a></h1>
+    <button class="hamburger-menu" aria-label="開啟選單" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <nav id="main-nav">
+      <a href="cv.html">About 關於</a>
+      <a href="index.html">Project 專案</a>
+	  <a href="development.html">Development 研發</a>
+    </nav>
+  </header>
+
+  
+    <section id="portfolio">
+      <h2>專案作品</h2>
+      <div class="portfolio-grid">
+         <a href="thethriftyfamily.html" class="project-link">
+          <div class="project">
+            <div class="project-image">
+              <img src="images/VFX.webp" alt="電影《省省吧! 我家富貴發》視覺特效與後製專案" />
+              <div class="project-overlay">
+                  <h3>省省吧! 我家富貴發</h3>
+              </div>
+            </div>
+          </div>
+        </a>
+		 <a href="crabs.html" class="project-link">
+          <div class="project">
+            <div class="project-image">
+              <img src="images/crab.webp" alt="3D CGI動畫《潮生之蟹》作品" />
+              <div class="project-overlay">
+                  <h3>潮生之蟹</h3>
+              </div>
+            </div>
+          </div>
+        </a>
+        <a href="no07.html" class="project-link">
+          <div class="project">
+            <div class="project-image">
+              <img src="images/no.07.webp" alt="《No.07》概念藝術" />
+              <div class="project-overlay">
+                  <h3>No.07</h3>
+              </div>
+            </div>
+          </div>
+        </a>
+        <a href="behindthedoor.html" class="project-link">
+          <div class="project">
+            <div class="project-image">
+              <img src="images/behind_the_door.webp" alt="《Behind the Door》3D結合2D風格的實驗動畫" />
+              <div class="project-overlay">
+                  <h3>Behind the Door</h3>
+              </div>
+            </div>
+          </div>
+        </a>
+		<a href="thebrain.html" class="project-link">
+          <div class="project">
+            <div class="project-image">
+              <img src="images/the_brain.webp" alt="《The Brain》陰森氛圍場景特效" />
+              <div class="project-overlay">
+                  <h3>The Brain</h3>
+              </div>
+            </div>
+          </div>
+        </a>
+		<a href="rain.html" class="project-link">
+          <div class="project">
+            <div class="project-image">
+              <img src="images/rain.webp" alt="《Rain》雨景場景氛圍視覺特效" />
+              <div class="project-overlay">
+                  <h3>Rain</h3>
+              </div>
+            </div>
+          </div>
+        </a>
+		<a href="rustycar.html" class="project-link">
+          <div class="project">
+            <div class="project-image">
+              <img src="images/rustycar.webp" alt="《Rusty Car》UE5渲染荒蕪場景" />
+              <div class="project-overlay">
+                  <h3>Rusty Car</h3>
+              </div>
+            </div>
+          </div>
+        </a>		
+      </div>
+    </section>
+
+ <footer>
+    <div class="social-links">
+        <a href="https://www.instagram.com/zhu.weilin/" target="_blank" aria-label="Instagram">
+            <i class="fab fa-instagram"></i>
+        </a>
+        <a href="https://www.behance.net/weilinzhu" target="_blank" aria-label="Behance">
+            <i class="fab fa-behance"></i>
+        </a>
+        <a href="https://www.artstation.com/zhuweilin" target="_blank" aria-label="Artstation">
+            <i class="fab fa-artstation"></i>
+        </a>
+    </div>
+    <div>
+        © 2025 ZHU WEI LIN｜wellin.job@gmail.com
+    </div>
+  </footer>
+
+  <script>
+    // Original IntersectionObserver script (Stays the same)
+    const sections = document.querySelectorAll('section');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, {
+      threshold: 0.1 /* Trigger when 10% of the section is visible */
+    });
+
+    sections.forEach(section => {
+      observer.observe(section);
+    });
+
+    // --- Hamburger Menu JavaScript (Stays the same) ---
+    const hamburgerButton = document.querySelector('.hamburger-menu');
+    const mainNav = document.querySelector('#main-nav');
+
+    if (hamburgerButton && mainNav) { // Check if elements exist
+      hamburgerButton.addEventListener('click', () => {
+        // Toggle the 'is-active' class on the navigation menu
+        mainNav.classList.toggle('is-active');
+
+        // Toggle the 'is-active' class on the hamburger button itself (for styling)
+        hamburgerButton.classList.toggle('is-active');
+
+        // Update the aria-expanded attribute for accessibility
+        const isActive = mainNav.classList.contains('is-active');
+        hamburgerButton.setAttribute('aria-expanded', isActive ? 'true' : 'false');
+      });
+
+      // Optional: Close the menu when a link is clicked
+      mainNav.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          // Check if the menu is currently active
+          if (mainNav.classList.contains('is-active')) {
+             mainNav.classList.remove('is-active');
+             hamburgerButton.classList.remove('is-active');
+             hamburgerButton.setAttribute('aria-expanded', 'false');
+          }
+        });
+      });
+    }
+    // --- Hamburger Menu JavaScript End ---
+  </script>
+</body>
+</html>
